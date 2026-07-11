@@ -1,11 +1,4 @@
-import DashboardCard from "@/components/dashboard/DashboardCard";
-
-import {
-  ShoppingCart,
-  DollarSign,
-  Users,
-  Utensils,
-} from "lucide-react";
+import DashboardCards from "@/components/dashboard/DashboardCards";
 
 export default function DashboardPage() {
   return (
@@ -23,33 +16,7 @@ export default function DashboardPage() {
 
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-        <DashboardCard
-          title="Pedidos"
-          value="24"
-          icon={ShoppingCart}
-        />
-
-        <DashboardCard
-          title="Receita"
-          value="R$ 3.250"
-          icon={DollarSign}
-        />
-
-        <DashboardCard
-          title="Clientes"
-          value="143"
-          icon={Users}
-        />
-
-        <DashboardCard
-          title="Mesas"
-          value="18"
-          icon={Utensils}
-        />
-
-      </div>
+      <DashboardCards />
 
     </div>
   );
