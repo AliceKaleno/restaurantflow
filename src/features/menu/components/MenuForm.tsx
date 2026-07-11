@@ -1,35 +1,95 @@
-import FormInput from "@/components/shared/form/FormInput";
-import FormTextarea from "@/components/shared/form/FormTextarea";
-import FormSelect from "@/components/shared/form/FormSelect";
-import FormSwitch from "@/components/shared/form/FormSwtich";
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import {
+  menuSchema,
+  MenuFormData,
+} from "../schemas/menu.schema";
 
 export default function MenuForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<MenuFormData>({
+    resolver: zodResolver(menuSchema),
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      description: "",
+      category: "",
+      price: 0,
+      available: true,
+    },
+  });
+
+  function onSubmit(data: MenuFormData) {
+    console.log(data);
+  }
+
   return (
-    <div className="space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6"
+    >
+      {/* Nome */}
+      <div>
+        <label className="mb-2 block text-sm font-medium">
+          Nome
+        </label>
 
-      <FormInput
-        label="Nome do prato"
-        placeholder="Ex.: Pizza Calabresa"
-      />
+        <input
+          {...register("name")}
+          className="w-full rounded-xl border p-3"
+        />
 
-      <FormTextarea
-        label="Descrição"
-        placeholder="Descreva o prato..."
-      />
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-500">
+            {errors.name.message}
+          </p>
+        )}
+      </div>
 
-      <FormSelect
-        label="Categoria"
-      />
+      {/* Descrição */}
+      <div>
+        <label className="mb-2 block text-sm font-medium">
+          Descrição
+        </label>
 
-      <FormInput
-        label="Preço"
-        placeholder="0,00"
-      />
+        <textarea
+          {...register("description")}
+          className="min-h-32 w-full rounded-xl border p-3"
+        />
 
-      <FormSwitch
-        label="Disponível"
-      />
+        {errors.description && (
+          <p className="mt-1 text-sm text-red-500">
+            {errors.description.message}
+          </p>
+        )}
+      </div>
 
-    </div>
+      {/* Botão */}
+
+      <button
+        type="submit"
+        disabled={!isValid}
+        className="
+          w-full
+          rounded-xl
+          bg-orange-500
+          py-3
+          font-semibold
+          text-white
+          transition
+          hover:bg-orange-600
+          disabled:cursor-not-allowed
+          disabled:bg-slate-300
+        "
+      >
+        Salvar Prato
+      </button>
+    </form>
   );
 }
