@@ -6,7 +6,7 @@ import MenuDrawer from "./MenuDrawer";
 
 import { Plus } from "lucide-react";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 import SearchBar from "./SearchBar";
 import CategoryFilter from "./CategoryFilter";

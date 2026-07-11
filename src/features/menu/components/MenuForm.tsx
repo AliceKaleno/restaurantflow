@@ -1,7 +1,7 @@
 import FormInput from "@/components/shared/form/FormInput";
 import FormTextarea from "@/components/shared/form/FormTextarea";
 import FormSelect from "@/components/shared/form/FormSelect";
-import FormSwitch from "@/components/shared/form/FormSwitch";
+import FormSwitch from "@/components/shared/form/FormSwtich";
 
 export default function MenuForm() {
   return (

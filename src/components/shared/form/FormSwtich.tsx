@@ -1,5 +1,5 @@
-import { Label } from "@/components/ui/Label";
-import { Switch } from "@/components/ui/Switch";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 interface Props {
   label: string;

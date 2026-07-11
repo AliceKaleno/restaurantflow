@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import AppCard from "@/components/shared/AppCard";
-import Badge from "@/components/ui/Badge";
+import Badge from "@/components/ui/badge";
 
 import { formatCurrency } from "@/utils/formatCurrency";
 import { MenuItem } from "@/types/menu";
