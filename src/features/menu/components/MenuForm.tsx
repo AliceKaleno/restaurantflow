@@ -8,10 +8,9 @@ import FormTextarea from "@/components/shared/form/FormTextarea";
 import FormSelect from "@/components/shared/form/FormSelect";
 import FormSwitch from "@/components/shared/form/FormSwitch";
 
-import {
-  menuSchema,
-  MenuFormData,
-} from "../schemas/menu.schema";
+import ImageUpload from "@/components/shared/upload/ImageUpload";
+
+import { menuSchema, MenuFormData } from "../schemas/menu.schema";
 
 export default function MenuForm() {
   const {
@@ -36,10 +35,7 @@ export default function MenuForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <FormInput
         label="🍽️ Nome do prato"
         placeholder="Ex.: Pizza Calabresa"
@@ -95,15 +91,12 @@ export default function MenuForm() {
         error={errors.price}
       />
 
+      <ImageUpload />
+
       <Controller
         control={control}
         name="available"
-        render={({ field }) => (
-          <FormSwitch
-            label="Disponível"
-            field={field}
-          />
-        )}
+        render={({ field }) => <FormSwitch label="Disponível" field={field} />}
       />
 
       <div className="flex justify-end gap-3 pt-4">
