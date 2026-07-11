@@ -3,12 +3,12 @@ import { UtensilsCrossed } from "lucide-react";
 export default function Logo() {
   return (
     <div className="flex items-center gap-3">
-      <div className="rounded-xl bg-orange-500 p-2 text-white">
-        <UtensilsCrossed size={22} />
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-md">
+        <UtensilsCrossed size={24} />
       </div>
 
       <div>
-        <h1 className="font-bold text-slate-900">
+        <h1 className="text-lg font-bold text-slate-900">
           RestaurantFlow
         </h1>
 
