@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+
+import MenuDrawer from "./MenuDrawer";
+
 import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
@@ -21,6 +24,7 @@ export default function MenuHeader({
   category,
   onCategoryChange,
 }: MenuHeaderProps) {
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -33,7 +37,7 @@ export default function MenuHeader({
           </p>
         </div>
 
-        <Button>
+        <Button onClick={() => setOpen(true)}>
           <Plus size={18} />
           Novo Prato
         </Button>
@@ -42,7 +46,8 @@ export default function MenuHeader({
       <SearchBar value={search} onChange={onSearchChange} />
 
       <CategoryFilter selected={category} onSelect={onCategoryChange} />
-    
+
+      <MenuDrawer open={open} onOpenChange={setOpen} />
     </div>
   );
 }
