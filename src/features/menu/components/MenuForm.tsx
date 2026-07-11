@@ -1,7 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import FormInput from "@/components/shared/form/FormInput";
+import FormTextarea from "@/components/shared/form/FormTextarea";
+import FormSelect from "@/components/shared/form/FormSelect";
+import FormSwitch from "@/components/shared/form/FormSwitch";
 
 import {
   menuSchema,
@@ -11,6 +16,7 @@ import {
 export default function MenuForm() {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<MenuFormData>({
@@ -34,62 +40,99 @@ export default function MenuForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6"
     >
-      {/* Nome */}
-      <div>
-        <label className="mb-2 block text-sm font-medium">
-          Nome
-        </label>
+      <FormInput
+        label="🍽️ Nome do prato"
+        placeholder="Ex.: Pizza Calabresa"
+        registration={register("name")}
+        error={errors.name}
+      />
 
-        <input
-          {...register("name")}
-          className="w-full rounded-xl border p-3"
-        />
+      <FormTextarea
+        label="📝 Descrição"
+        placeholder="Descreva o prato..."
+        registration={register("description")}
+        error={errors.description}
+      />
 
-        {errors.name && (
-          <p className="mt-1 text-sm text-red-500">
-            {errors.name.message}
-          </p>
+      <Controller
+        control={control}
+        name="category"
+        render={({ field }) => (
+          <FormSelect
+            label="🏷️ Categoria"
+            placeholder="Selecione uma categoria"
+            field={field}
+            error={errors.category}
+            options={[
+              {
+                value: "pizza",
+                label: "🍕 Pizza",
+              },
+              {
+                value: "burger",
+                label: "🍔 Hambúrguer",
+              },
+              {
+                value: "drink",
+                label: "🥤 Bebida",
+              },
+              {
+                value: "dessert",
+                label: "🍰 Sobremesa",
+              },
+            ]}
+          />
         )}
-      </div>
+      />
 
-      {/* Descrição */}
-      <div>
-        <label className="mb-2 block text-sm font-medium">
-          Descrição
-        </label>
+      <FormInput
+        label="💰 Preço"
+        type="number"
+        placeholder="0,00"
+        registration={register("price", {
+          valueAsNumber: true,
+        })}
+        error={errors.price}
+      />
 
-        <textarea
-          {...register("description")}
-          className="min-h-32 w-full rounded-xl border p-3"
-        />
-
-        {errors.description && (
-          <p className="mt-1 text-sm text-red-500">
-            {errors.description.message}
-          </p>
+      <Controller
+        control={control}
+        name="available"
+        render={({ field }) => (
+          <FormSwitch
+            label="Disponível"
+            field={field}
+          />
         )}
+      />
+
+      <div className="flex justify-end gap-3 pt-4">
+        <button
+          type="button"
+          className="rounded-xl border border-slate-300 px-5 py-3 font-medium transition hover:bg-slate-100"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          disabled={!isValid}
+          className="
+            rounded-xl
+            bg-orange-500
+            px-6
+            py-3
+            font-semibold
+            text-white
+            transition
+            hover:bg-orange-600
+            disabled:cursor-not-allowed
+            disabled:bg-slate-300
+          "
+        >
+          Salvar Prato
+        </button>
       </div>
-
-      {/* Botão */}
-
-      <button
-        type="submit"
-        disabled={!isValid}
-        className="
-          w-full
-          rounded-xl
-          bg-orange-500
-          py-3
-          font-semibold
-          text-white
-          transition
-          hover:bg-orange-600
-          disabled:cursor-not-allowed
-          disabled:bg-slate-300
-        "
-      >
-        Salvar Prato
-      </button>
     </form>
   );
 }

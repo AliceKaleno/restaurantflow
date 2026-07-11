@@ -1,3 +1,12 @@
+"use client";
+
+import {
+  ControllerRenderProps,
+  FieldError,
+  FieldValues,
+  Path,
+} from "react-hook-form";
+
 import { Label } from "@/components/ui/label";
 
 import {
@@ -8,46 +17,67 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface Props {
+interface Option {
+  value: string;
   label: string;
 }
 
-export default function FormSelect({
+interface FormSelectProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends Path<TFieldValues> = Path<TFieldValues>
+> {
+  label: string;
+  placeholder?: string;
+  field: ControllerRenderProps<TFieldValues, TName>;
+  error?: FieldError;
+  options: Option[];
+}
+
+export default function FormSelect<
+  TFieldValues extends FieldValues,
+  TName extends Path<TFieldValues>
+>({
   label,
-}: Props) {
+  placeholder,
+  field,
+  error,
+  options,
+}: FormSelectProps<TFieldValues, TName>) {
   return (
     <div className="space-y-2">
+
       <Label>{label}</Label>
 
-      <Select>
-
+      <Select
+        value={field.value ?? ""}
+        onValueChange={field.onChange}
+      >
         <SelectTrigger>
 
-          <SelectValue placeholder="Selecione" />
+          <SelectValue placeholder={placeholder} />
 
         </SelectTrigger>
 
         <SelectContent>
 
-          <SelectItem value="pizza">
-            Pizza
-          </SelectItem>
-
-          <SelectItem value="burger">
-            Hambúrguer
-          </SelectItem>
-
-          <SelectItem value="drink">
-            Bebida
-          </SelectItem>
-
-          <SelectItem value="dessert">
-            Sobremesa
-          </SelectItem>
+          {options.map((option) => (
+            <SelectItem
+              key={option.value}
+              value={option.value}
+            >
+              {option.label}
+            </SelectItem>
+          ))}
 
         </SelectContent>
 
       </Select>
+
+      {error && (
+        <p className="text-sm text-red-500">
+          {error.message}
+        </p>
+      )}
 
     </div>
   );

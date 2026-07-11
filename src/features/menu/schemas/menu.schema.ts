@@ -9,7 +9,9 @@ export const menuSchema = z.object({
     .string()
     .min(10, "A descrição deve possuir pelo menos 10 caracteres."),
 
-  category: z.string(),
+  category: z
+  .string()
+  .min(1, "Selecione uma categoria."),
 
   price: z
     .number({
