@@ -1,0 +1,23 @@
+import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+
+interface AppCardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export default function AppCard({
+  children,
+  className,
+}: AppCardProps) {
+  return (
+    <div
+      className={cn(
+        "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg",
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}

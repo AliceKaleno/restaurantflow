@@ -19,7 +19,7 @@ export default function Layout({
 
         <Header />
 
-        <main className="flex-1 p-8">
+        <main className="flex-1 overflow-y-auto p-8">
 
           {children}
 

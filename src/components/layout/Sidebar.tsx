@@ -14,7 +14,7 @@ import {
 
 export default function Sidebar() {
   return (
-    <aside className="flex h-screen w-72 flex-col border-r border-slate-200 bg-white p-6">
+    <aside className="sticky top-0 flex h-screen w-72 flex-col border-r border-slate-200 bg-white p-6">
 
       <Logo />
 
