@@ -1,30 +1,53 @@
+"use client";
+
+import { useState } from "react";
 import { Plus } from "lucide-react";
 
 import {Button} from "@/components/ui/Button";
 
+import SearchBar from "./SearchBar";
+import CategoryFilter from "./CategoryFilter";
+
 export default function MenuHeader() {
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("Todos");
+
   return (
-    <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+    <div className="space-y-6">
 
-      <div>
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
 
-        <h1 className="text-3xl font-bold">
-          Cardápio
-        </h1>
+        <div>
 
-        <p className="text-slate-500">
-          Gerencie todos os pratos do restaurante.
-        </p>
+          <h1 className="text-3xl font-bold">
+            Cardápio
+          </h1>
+
+          <p className="text-slate-500">
+            Gerencie todos os pratos do restaurante.
+          </p>
+
+        </div>
+
+        <Button>
+
+          <Plus size={18} />
+
+          Novo Prato
+
+        </Button>
 
       </div>
 
-      <Button>
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+      />
 
-        <Plus size={18} />
-
-        Novo Prato
-
-      </Button>
+      <CategoryFilter
+        selected={category}
+        onSelect={setCategory}
+      />
 
     </div>
   );

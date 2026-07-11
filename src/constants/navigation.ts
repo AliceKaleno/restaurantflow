@@ -5,6 +5,8 @@ import {
   UtensilsCrossed,
   BarChart3,
   Settings,
+  BookOpen,
+  CalendarDays,
 } from "lucide-react";
 
 export const navigation = [
@@ -24,9 +26,19 @@ export const navigation = [
     icon: ShoppingCart,
   },
   {
+    label: "Cardápio",
+    href: "/menu",
+    icon: BookOpen,
+  },
+  {
     label: "Clientes",
     href: "/customers",
     icon: Users,
+  },
+  {
+    label: "Reservas",
+    href: "/reservations",
+    icon: CalendarDays,
   },
   {
     label: "Relatórios",

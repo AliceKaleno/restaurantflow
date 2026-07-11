@@ -1,5 +1,4 @@
 import { menuItems } from "@/mocks/menu";
-
 import MenuCard from "./MenuCard";
 
 export default function MenuGrid() {
