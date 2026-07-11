@@ -2,6 +2,8 @@
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
+import MenuForm from "./MenuForm";
+
 interface MenuDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -23,9 +25,7 @@ export default function MenuDrawer({
 
         <div className="mt-8">
 
-          <p className="text-slate-500">
-            Em breve aqui ficará o formulário de cadastro.
-          </p>
+          <MenuForm />
 
         </div>
 
