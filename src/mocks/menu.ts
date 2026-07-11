@@ -8,7 +8,7 @@ export const menuItems: MenuItem[] = [
     description: "Molho artesanal, mussarela e manjericão.",
     category: "Pizza",
     price: 48.9,
-    image: "/menu/pizza.jpg",
+    image: "@/menu/pizza.png",
     available: true,
   },
   {
@@ -17,7 +17,16 @@ export const menuItems: MenuItem[] = [
     description: "Pão brioche, cheddar e bacon.",
     category: "Hambúrguer",
     price: 36.9,
-    image: "/menu/burger.jpg",
+    image: "@/menu/burger.png",
+    available: false,
+  },
+    {
+    id: 3,
+    name: "Delicius Salada",
+    description: "Salada bem preparada com diversos legumes.",
+    category: "Salada",
+    price: 36.9,
+    image: "@/menu/salada.png",
     available: false,
   },
 ];

@@ -2,7 +2,7 @@ export type Category =
   | "Pizza"
   | "Hambúrguer"
   | "Bebida"
-  | "Sobremesa";
+  | "Salada";
 
 export interface MenuItem {
   id: number;

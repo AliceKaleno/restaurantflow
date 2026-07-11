@@ -1,16 +1,14 @@
 import Layout from "@/components/layout/Layout";
+import MenuGrid from "@/features/menu/components/MenuGrid";
+import MenuHeader from "@/features/menu/components/MenuHeader";
 
-export default function OrdersPage() {
+export default function MenuPage() {
   return (
     <Layout>
-      <div className="space-y-3">
-        <h1 className="text-3xl font-bold">
-          Menu
-        </h1>
+      <div className="space-y-8">
+        <MenuHeader />
 
-        <p className="text-slate-500">
-          Gerencie o restaurante.
-        </p>
+        <MenuGrid />
       </div>
     </Layout>
   );
