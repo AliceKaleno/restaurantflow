@@ -17,6 +17,8 @@ import {
   MenuFormData,
 } from "../schemas/menu.schema";
 
+import { toast } from "sonner";
+
 export default function MenuForm() {
   const addItem = useMenuStore((state) => state.addItem);
   const updateItem = useMenuStore((state) => state.updateItem);
@@ -78,14 +80,14 @@ export default function MenuForm() {
     if (editingItem) {
       updateItem(editingItem.id, data);
 
-      alert("✅ Prato atualizado com sucesso!");
+      toast.success("Prato atualizado com sucesso!");
     } else {
       addItem({
         id: crypto.randomUUID(),
         ...data,
       });
 
-      alert("✅ Prato cadastrado com sucesso!");
+      toast.success("Prato cadastrado com sucesso!");
     }
 
     setEditingItem(null);
