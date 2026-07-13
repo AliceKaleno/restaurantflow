@@ -6,15 +6,18 @@ import Badge from "@/components/ui/badge";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { MenuItem } from "@/types/menu";
 
+import { useMenuStore } from "@/store/menuStore";
+
 interface Props {
   item: MenuItem;
   priority?: boolean;
 }
 
-export default function MenuCard({
-  item,
-  priority = false,
-}: Props) {
+export default function MenuCard({ item, priority = false }: Props) {
+  const removeItem = useMenuStore((state) => state.removeItem);
+
+  const setEditingItem = useMenuStore((state) => state.setEditingItem);
+
   return (
     <AppCard
       className="
@@ -40,53 +43,62 @@ export default function MenuCard({
       {/* Conteúdo */}
       <div className="space-y-5 p-5">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">
-            {item.name}
-          </h2>
+          <h2 className="text-xl font-semibold text-slate-900">{item.name}</h2>
 
           <p className="mt-2 text-sm leading-relaxed text-slate-500">
             {item.description}
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="info">
-              {item.category}
-            </Badge>
+            <Badge variant="info">{item.category}</Badge>
 
-            <Badge
-              variant={
-                item.available
-                  ? "success"
-                  : "danger"
-              }
-            >
-              {item.available
-                ? "Disponível"
-                : "Indisponível"}
+            <Badge variant={item.available ? "success" : "danger"}>
+              {item.available ? "Disponível" : "Indisponível"}
             </Badge>
           </div>
         </div>
 
         {/* Rodapé */}
-        <div className="flex items-center justify-between border-t border-slate-200 pt-4">
-          <strong className="text-2xl font-bold text-orange-600">
+        <div className="flex items-center justify-between">
+          <strong className="text-xl text-orange-600">
             {formatCurrency(item.price)}
           </strong>
 
-          <button
-            className="
-              rounded-lg
-              px-4
-              py-2
-              text-sm
-              font-medium
-              text-orange-600
-              transition
-              hover:bg-orange-50
-            "
-          >
-            Editar
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setEditingItem(item)}
+              className="
+    rounded-lg
+    bg-blue-500
+    px-3
+    py-2
+    text-sm
+    font-medium
+    text-white
+    transition
+    hover:bg-blue-600
+  "
+            >
+              Editar
+            </button>
+
+            <button
+              onClick={() => removeItem(item.id)}
+              className="
+                rounded-lg
+                bg-red-500
+                px-3
+                py-2
+                text-sm
+                font-medium
+                text-white
+                transition
+                hover:bg-red-600
+              "
+            >
+              Excluir
+            </button>
+          </div>
         </div>
       </div>
     </AppCard>

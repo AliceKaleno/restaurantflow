@@ -1,9 +1,8 @@
 import { MenuItem } from "@/types/menu";
 
-
 export const menuItems: MenuItem[] = [
   {
-    id: 1,
+    id: "1",
     name: "Pizza Margherita",
     description: "Molho artesanal, mussarela e manjericão.",
     category: "Pizza",
@@ -12,7 +11,7 @@ export const menuItems: MenuItem[] = [
     available: true,
   },
   {
-    id: 2,
+    id: "2",
     name: "Smash Burger",
     description: "Pão brioche, cheddar e bacon.",
     category: "Hambúrguer",
@@ -21,7 +20,7 @@ export const menuItems: MenuItem[] = [
     available: false,
   },
     {
-    id: 3,
+    id: "3",
     name: "Delicius Salada",
     description: "Salada bem preparada com diversos legumes.",
     category: "Salada",

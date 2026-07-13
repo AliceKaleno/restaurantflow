@@ -1,5 +1,8 @@
-import MenuCard from "./MenuCard";
+"use client";
+
 import { MenuItem } from "@/types/menu";
+
+import MenuCard from "./MenuCard";
 
 interface MenuGridProps {
   items: MenuItem[];

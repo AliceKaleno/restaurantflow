@@ -5,7 +5,7 @@ export type Category =
   | "Salada";
 
 export interface MenuItem {
-  id: number;
+  id: string;
   name: string;
   description: string;
   category: Category;

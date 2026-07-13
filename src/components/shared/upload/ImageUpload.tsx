@@ -1,35 +1,37 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { ImagePlus, Trash2 } from "lucide-react";
 
 interface ImageUploadProps {
-  onImageChange?: (file: File | null) => void;
+  value?: string;
+  onImageChange?: (image: string | null) => void;
 }
 
 export default function ImageUpload({
+  value,
   onImageChange,
 }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [preview, setPreview] = useState<string | null>(null);
-
-  function handleFile(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleFile(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = event.target.files?.[0];
 
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
+    const reader = new FileReader();
 
-    setPreview(imageUrl);
+    reader.onloadend = () => {
+      onImageChange?.(reader.result as string);
+    };
 
-    onImageChange?.(file);
+    reader.readAsDataURL(file);
   }
 
   function removeImage() {
-    setPreview(null);
-
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -39,7 +41,6 @@ export default function ImageUpload({
 
   return (
     <div className="space-y-2">
-
       <label className="text-sm font-medium">
         📷 Foto do prato
       </label>
@@ -48,7 +49,7 @@ export default function ImageUpload({
         className="
           relative
           flex
-          h-64
+          h-40
           items-center
           justify-center
           overflow-hidden
@@ -60,12 +61,10 @@ export default function ImageUpload({
           hover:border-orange-500
         "
       >
-
-        {preview ? (
-
+        {value ? (
           <>
             <Image
-              src={preview}
+              src={value}
               alt="Preview"
               fill
               className="object-cover"
@@ -76,8 +75,8 @@ export default function ImageUpload({
               onClick={removeImage}
               className="
                 absolute
-                right-3
-                top-3
+                right-2
+                top-2
                 rounded-full
                 bg-white
                 p-2
@@ -92,9 +91,7 @@ export default function ImageUpload({
               />
             </button>
           </>
-
         ) : (
-
           <label
             className="
               flex
@@ -104,15 +101,16 @@ export default function ImageUpload({
               flex-col
               items-center
               justify-center
+              gap-2
             "
           >
             <ImagePlus
-              size={48}
+              size={30}
               className="text-slate-400"
             />
 
-            <p className="mt-4 text-slate-500">
-              Clique para enviar uma imagem
+            <p className="text-sm text-slate-500">
+              Clique para escolher uma imagem
             </p>
 
             <input
@@ -123,11 +121,8 @@ export default function ImageUpload({
               className="hidden"
             />
           </label>
-
         )}
-
       </div>
-
     </div>
   );
 }

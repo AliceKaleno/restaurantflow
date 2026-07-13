@@ -9,9 +9,12 @@ export const menuSchema = z.object({
     .string()
     .min(10, "A descrição deve possuir pelo menos 10 caracteres."),
 
-  category: z
-  .string()
-  .min(1, "Selecione uma categoria."),
+  category: z.enum(
+    ["Pizza", "Hambúrguer", "Bebida", "Salada"],
+    {
+      error: "Selecione uma categoria.",
+    }
+  ),
 
   price: z
     .number({
@@ -20,6 +23,8 @@ export const menuSchema = z.object({
     .positive("O preço deve ser maior que zero."),
 
   available: z.boolean(),
+
+  image: z.string(),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;

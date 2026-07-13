@@ -19,7 +19,6 @@ export default function MenuPage() {
   return (
     <Layout>
       <div className="space-y-8">
-
         <MenuHeader
           search={search}
           onSearchChange={setSearch}
@@ -31,10 +30,7 @@ export default function MenuPage() {
           {filteredItems.length} prato(s) encontrado(s)
         </p>
 
-        <MenuGrid
-          items={filteredItems}
-        />
-
+        <MenuGrid items={filteredItems} />
       </div>
     </Layout>
   );

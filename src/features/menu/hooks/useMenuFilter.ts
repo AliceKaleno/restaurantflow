@@ -1,15 +1,20 @@
+"use client";
+
 import { useMemo, useState } from "react";
 
-import { menuItems } from "@/mocks/menu";
+import { useMenuStore } from "@/store/menuStore";
 
 export function useMenuFilter() {
+  const items = useMenuStore((state) => state.items);
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todos");
 
   const filteredItems = useMemo(() => {
-    return menuItems.filter((item) => {
-      const matchesSearch =
-        item.name.toLowerCase().includes(search.toLowerCase());
+    return items.filter((item) => {
+      const matchesSearch = item.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
       const matchesCategory =
         category === "Todos" ||
@@ -17,7 +22,7 @@ export function useMenuFilter() {
 
       return matchesSearch && matchesCategory;
     });
-  }, [search, category]);
+  }, [items, search, category]);
 
   return {
     search,
