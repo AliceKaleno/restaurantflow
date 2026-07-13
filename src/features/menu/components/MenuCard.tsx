@@ -9,6 +9,8 @@ import { MenuItem } from "@/types/menu";
 import { useMenuStore } from "@/store/menuStore";
 
 import { toast } from "sonner";
+
+import DeleteMenuDialog from "./DeleteMenuDialog";
 interface Props {
   item: MenuItem;
   priority?: boolean;
@@ -83,26 +85,9 @@ export default function MenuCard({ item, priority = false }: Props) {
               Editar
             </button>
 
-            <button
-              onClick={() => {
-                removeItem(item.id);
-
-                toast.success("Prato removido!");
-              }}
-              className="
-                rounded-lg
-                bg-red-500
-                px-3
-                py-2
-                text-sm
-                font-medium
-                text-white
-                transition
-                hover:bg-red-600
-              "
-            >
-              Excluir
-            </button>
+            <DeleteMenuDialog onConfirm={() => removeItem(item.id)}>
+              
+            </DeleteMenuDialog>
           </div>
         </div>
       </div>
