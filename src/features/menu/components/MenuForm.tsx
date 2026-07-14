@@ -12,24 +12,20 @@ import ImageUpload from "@/components/shared/upload/ImageUpload";
 
 import { useMenuStore } from "@/store/menuStore";
 
-import {
-  menuSchema,
-  MenuFormData,
-} from "../schemas/menu.schema";
+import { menuSchema, MenuFormData } from "../schemas/menu.schema";
 
 import { toast } from "sonner";
 
 export default function MenuForm() {
   const addItem = useMenuStore((state) => state.addItem);
+
   const updateItem = useMenuStore((state) => state.updateItem);
 
-  const editingItem = useMenuStore(
-    (state) => state.editingItem
-  );
+  const editingItem = useMenuStore((state) => state.editingItem);
 
-  const setEditingItem = useMenuStore(
-    (state) => state.setEditingItem
-  );
+  const setEditingItem = useMenuStore((state) => state.setEditingItem);
+
+  const setDrawerOpen = useMenuStore((state) => state.setDrawerOpen);
 
   const {
     register,
@@ -103,10 +99,7 @@ export default function MenuForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <FormInput
         label="🍽️ Nome do prato"
         placeholder="Ex.: Pizza Calabresa"
@@ -174,12 +167,7 @@ export default function MenuForm() {
       <Controller
         control={control}
         name="available"
-        render={({ field }) => (
-          <FormSwitch
-            label="Disponível"
-            field={field}
-          />
-        )}
+        render={({ field }) => <FormSwitch label="Disponível" field={field} />}
       />
 
       <div className="flex justify-end gap-3 pt-4">
@@ -218,9 +206,7 @@ export default function MenuForm() {
             disabled:bg-slate-300
           "
         >
-          {editingItem
-            ? "Atualizar Prato"
-            : "Salvar Prato"}
+          {editingItem ? "Atualizar Prato" : "Salvar Prato"}
         </button>
       </div>
     </form>
