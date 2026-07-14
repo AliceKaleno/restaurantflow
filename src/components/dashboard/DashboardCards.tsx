@@ -7,7 +7,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-import DashboardCard from "./DashboardCard";
+import StatCard from "@/components/shared/statistics/StatCard";
 
 import { useMenuStore } from "@/store/menuStore";
 import { getDashboardStats } from "@/services/dashboard/dashboardStats";
@@ -20,25 +20,25 @@ export default function DashboardCards() {
 
   return (
     <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-      <DashboardCard
+      <StatCard
         title="Pratos"
         value={String(stats.totalPratos)}
         icon={UtensilsCrossed}
       />
 
-      <DashboardCard
+      <StatCard
         title="Preço Médio"
         value={formatCurrency(stats.precoMedio)}
         icon={DollarSign}
       />
 
-      <DashboardCard
+      <StatCard
         title="Disponíveis"
         value={String(stats.disponiveis)}
         icon={CheckCircle2}
       />
 
-      <DashboardCard
+      <StatCard
         title="Indisponíveis"
         value={String(stats.indisponiveis)}
         icon={XCircle}
