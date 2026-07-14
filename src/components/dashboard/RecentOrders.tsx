@@ -1,38 +1,72 @@
-import AppCard from "@/components/shared/AppCard";
+"use client";
 
-const orders = [
-  {
-    table: "Mesa 08",
-    value: "R$ 180",
-  },
-  {
-    table: "Mesa 04",
-    value: "R$ 240",
-  },
-  {
-    table: "Delivery",
-    value: "R$ 95",
-  },
-];
+import AppCard from "@/components/shared/AppCard";
+import Badge from "@/components/ui/badge";
+
+import { useMenuStore } from "@/store/menuStore";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function RecentOrders() {
+  const items = useMenuStore((state) => state.items);
+
+  const recentItems = [...items].slice(0, 5);
+
   return (
     <AppCard>
       <h2 className="mb-5 text-lg font-semibold">
-        Pedidos Recentes
+        Últimos pratos cadastrados
       </h2>
 
       <div className="space-y-4">
-        {orders.map((order) => (
-          <div
-            key={order.table}
-            className="flex items-center justify-between rounded-xl bg-slate-50 p-4"
-          >
-            <span>{order.table}</span>
+        {recentItems.length === 0 ? (
+          <p className="text-sm text-slate-500">
+            Nenhum prato cadastrado.
+          </p>
+        ) : (
+          recentItems.map((item) => (
+            <div
+              key={item.id}
+              className="
+                rounded-xl
+                border
+                border-slate-200
+                p-4
+                transition
+                hover:border-orange-300
+              "
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold">
+                    {item.name}
+                  </h3>
 
-            <strong>{order.value}</strong>
-          </div>
-        ))}
+                  <p className="text-sm text-slate-500">
+                    {item.category}
+                  </p>
+                </div>
+
+                <Badge
+                  variant={
+                    item.available
+                      ? "success"
+                      : "danger"
+                  }
+                >
+                  {item.available
+                    ? "Disponível"
+                    : "Indisponível"}
+                </Badge>
+              </div>
+
+              <div className="mt-3 flex justify-end">
+                <strong className="text-orange-600">
+                  {formatCurrency(item.price)}
+                </strong>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </AppCard>
   );
