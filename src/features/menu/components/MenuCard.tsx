@@ -21,6 +21,8 @@ export default function MenuCard({ item, priority = false }: Props) {
 
   const setEditingItem = useMenuStore((state) => state.setEditingItem);
 
+  const setDrawerOpen = useMenuStore((state) => state.setDrawerOpen);
+
   return (
     <AppCard
       className="
@@ -69,7 +71,10 @@ export default function MenuCard({ item, priority = false }: Props) {
 
           <div className="flex gap-2">
             <button
-              onClick={() => setEditingItem(item)}
+              onClick={() => {
+                setEditingItem(item);
+                setDrawerOpen(true);
+              }}
               className="
     rounded-lg
     bg-blue-500
@@ -85,9 +90,26 @@ export default function MenuCard({ item, priority = false }: Props) {
               Editar
             </button>
 
-            <DeleteMenuDialog onConfirm={() => removeItem(item.id)}>
-              
-            </DeleteMenuDialog>
+            <button
+              onClick={() => {
+                removeItem(item.id);
+
+                toast.success("Prato removido!");
+              }}
+              className="
+                rounded-lg
+                bg-red-500
+                px-3
+                py-2
+                text-sm
+                font-medium
+                text-white
+                transition
+                hover:bg-red-600
+              "
+            >
+              Excluir
+            </button>
           </div>
         </div>
       </div>

@@ -13,16 +13,15 @@ interface MenuStore {
 
   removeItem: (id: string) => void;
 
-  updateItem: (
-    id: string,
-    data: Partial<MenuItem>
-  ) => void;
+  updateItem: (id: string, data: Partial<MenuItem>) => void;
 
   setItems: (items: MenuItem[]) => void;
 
-  setEditingItem: (
-    item: MenuItem | null
-  ) => void;
+  setEditingItem: (item: MenuItem | null) => void;
+
+  drawerOpen: boolean;
+
+  setDrawerOpen: (open: boolean) => void;
 }
 
 export const useMenuStore = create<MenuStore>()(
@@ -32,6 +31,8 @@ export const useMenuStore = create<MenuStore>()(
 
       editingItem: null,
 
+      drawerOpen: false,
+
       addItem: (item) =>
         set((state) => ({
           items: [item, ...state.items],
@@ -39,9 +40,7 @@ export const useMenuStore = create<MenuStore>()(
 
       removeItem: (id) =>
         set((state) => ({
-          items: state.items.filter(
-            (item) => item.id !== id
-          ),
+          items: state.items.filter((item) => item.id !== id),
         })),
 
       updateItem: (id, data) =>
@@ -52,7 +51,7 @@ export const useMenuStore = create<MenuStore>()(
                   ...item,
                   ...data,
                 }
-              : item
+              : item,
           ),
         })),
 
@@ -65,9 +64,15 @@ export const useMenuStore = create<MenuStore>()(
         set({
           editingItem: item,
         }),
+
+      setDrawerOpen: (open) =>
+        set({
+          drawerOpen: open,
+        }),
     }),
+
     {
       name: "restaurantflow-menu",
-    }
-  )
+    },
+  ),
 );

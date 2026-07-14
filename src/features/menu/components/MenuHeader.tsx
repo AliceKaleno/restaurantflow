@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import SearchBar from "./SearchBar";
 import CategoryFilter from "./CategoryFilter";
 
+import { useMenuStore } from "@/store/menuStore";
+
 interface MenuHeaderProps {
   search: string;
   onSearchChange: (value: string) => void;
@@ -24,7 +26,11 @@ export default function MenuHeader({
   category,
   onCategoryChange,
 }: MenuHeaderProps) {
-  const [open, setOpen] = useState(false);
+  const drawerOpen = useMenuStore((state) => state.drawerOpen);
+
+  const setDrawerOpen = useMenuStore((state) => state.setDrawerOpen);
+
+  const setEditingItem = useMenuStore((state) => state.setEditingItem);
 
   return (
     <div className="space-y-6">
@@ -37,7 +43,12 @@ export default function MenuHeader({
           </p>
         </div>
 
-        <Button onClick={() => setOpen(true)}>
+        <Button
+          onClick={() => {
+            setEditingItem(null);
+            setDrawerOpen(true);
+          }}
+        >
           <Plus size={18} />
           Novo Prato
         </Button>
@@ -47,7 +58,7 @@ export default function MenuHeader({
 
       <CategoryFilter selected={category} onSelect={onCategoryChange} />
 
-      <MenuDrawer open={open} onOpenChange={setOpen} />
+      <MenuDrawer open={drawerOpen} onOpenChange={setDrawerOpen} />
     </div>
   );
 }
