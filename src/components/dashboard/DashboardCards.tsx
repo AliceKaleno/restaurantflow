@@ -2,60 +2,46 @@
 
 import {
   UtensilsCrossed,
-  CircleCheckBig,
-  CircleX,
   DollarSign,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 
 import DashboardCard from "./DashboardCard";
 
 import { useMenuStore } from "@/store/menuStore";
+import { getDashboardStats } from "@/services/dashboard/dashboardStats";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function DashboardCards() {
   const items = useMenuStore((state) => state.items);
 
-  const totalPratos = items.length;
-
-  const disponiveis = items.filter(
-    (item) => item.available
-  ).length;
-
-  const indisponiveis =
-    totalPratos - disponiveis;
-
-  const precoMedio =
-    totalPratos === 0
-      ? 0
-      : items.reduce(
-          (acc, item) => acc + item.price,
-          0
-        ) / totalPratos;
+  const stats = getDashboardStats(items);
 
   return (
     <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
       <DashboardCard
         title="Pratos"
-        value={String(totalPratos)}
+        value={String(stats.totalPratos)}
         icon={UtensilsCrossed}
       />
 
       <DashboardCard
         title="Preço Médio"
-        value={formatCurrency(precoMedio)}
+        value={formatCurrency(stats.precoMedio)}
         icon={DollarSign}
       />
 
       <DashboardCard
         title="Disponíveis"
-        value={String(disponiveis)}
-        icon={CircleCheckBig}
+        value={String(stats.disponiveis)}
+        icon={CheckCircle2}
       />
 
       <DashboardCard
         title="Indisponíveis"
-        value={String(indisponiveis)}
-        icon={CircleX}
+        value={String(stats.indisponiveis)}
+        icon={XCircle}
       />
     </section>
   );

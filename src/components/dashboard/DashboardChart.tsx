@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 
 import { useMenuStore } from "@/store/menuStore";
+import { getDashboardStats } from "@/services/dashboard/dashboardStats";
 
 ChartJS.register(
   CategoryScale,
@@ -28,34 +29,32 @@ ChartJS.register(
 export default function DashboardChart() {
   const items = useMenuStore((state) => state.items);
 
-  const categorias = [
-    "Pizza",
-    "Hambúrguer",
-    "Bebida",
-    "Salada",
-  ];
-
-  const quantidade = categorias.map(
-    (categoria) =>
-      items.filter(
-        (item) => item.category === categoria
-      ).length
-  );
+  const stats = getDashboardStats(items);
 
   const data = {
-    labels: categorias,
+    labels: stats.categoryData.map(
+      (item) => item.category
+    ),
 
     datasets: [
       {
         label: "Quantidade de pratos",
 
-        data: quantidade,
+        data: stats.categoryData.map(
+          (item) => item.total
+        ),
 
         borderColor: "#f97316",
 
         backgroundColor: "#fb923c",
 
-        tension: 0.4,
+        pointBackgroundColor: "#ea580c",
+
+        pointRadius: 6,
+
+        borderWidth: 3,
+
+        tension: 0.35,
 
         fill: false,
       },
@@ -65,23 +64,37 @@ export default function DashboardChart() {
   const options = {
     responsive: true,
 
+    maintainAspectRatio: false,
+
     plugins: {
       legend: {
         display: false,
+      },
+    },
+
+    scales: {
+      y: {
+        beginAtZero: true,
+
+        ticks: {
+          precision: 0,
+        },
       },
     },
   };
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="mb-5 text-lg font-semibold">
+      <h2 className="mb-6 text-lg font-semibold">
         Pratos por categoria
       </h2>
 
-      <Line
-        data={data}
-        options={options}
-      />
+      <div className="h-72">
+        <Line
+          data={data}
+          options={options}
+        />
+      </div>
     </div>
   );
 }

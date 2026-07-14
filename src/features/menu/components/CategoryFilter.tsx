@@ -3,7 +3,7 @@ const categories = [
   "Pizza",
   "Hambúrguer",
   "Bebida",
-  "Sobremesa",
+  "Salada",
 ];
 
 interface Props {
