@@ -9,26 +9,71 @@ interface ImageUploadProps {
   onImageChange?: (image: string | null) => void;
 }
 
+const MAX_WIDTH = 600;
+const MAX_HEIGHT = 600;
+const QUALITY = 0.7;
+
+function compressImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const img = document.createElement("img");
+
+      img.onload = () => {
+        let { width, height } = img;
+
+        if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+          const ratio = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+          width = width * ratio;
+          height = height * ratio;
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          reject(new Error("Não foi possível processar a imagem."));
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+
+        resolve(canvas.toDataURL("image/jpeg", QUALITY));
+      };
+
+      img.onerror = () => reject(new Error("Não foi possível carregar a imagem."));
+
+      img.src = event.target?.result as string;
+    };
+
+    reader.onerror = () => reject(new Error("Não foi possível ler o arquivo."));
+
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function ImageUpload({
   value,
   onImageChange,
 }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function handleFile(
+  async function handleFile(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     const file = event.target.files?.[0];
 
     if (!file) return;
 
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      onImageChange?.(reader.result as string);
-    };
-
-    reader.readAsDataURL(file);
+    try {
+      const compressed = await compressImage(file);
+      onImageChange?.(compressed);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function removeImage() {

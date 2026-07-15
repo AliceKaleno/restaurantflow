@@ -7,7 +7,10 @@ export interface DashboardStats {
   precoMedio: number;
   pratoMaisCaro: MenuItem | null;
   pratoMaisBarato: MenuItem | null;
-  categoriaMaisPopular: string;
+  categoriaMaisPopular: {
+    nome: string;
+    quantidade: number;
+} | null;
 
   categoryData: {
     category: string;
@@ -45,8 +48,16 @@ export function getDashboardStats(items: MenuItem[]): DashboardStats {
     {} as Record<string, number>,
   );
 
-  const categoriaMaisPopular =
-    Object.entries(categorias).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "-";
+  const categoriaMaisPopularEntry = Object.entries(categorias).sort(
+  (a, b) => b[1] - a[1],
+)[0];
+
+const categoriaMaisPopular = categoriaMaisPopularEntry
+  ? {
+      nome: categoriaMaisPopularEntry[0],
+      quantidade: categoriaMaisPopularEntry[1],
+    }
+  : null;
 
   const categoryData = Object.entries(categorias).map(([category, total]) => ({
     category,

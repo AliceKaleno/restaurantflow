@@ -24,24 +24,28 @@ export default function DashboardCards() {
         title="Pratos"
         value={String(stats.totalPratos)}
         icon={UtensilsCrossed}
+        color="orange"
       />
 
       <StatCard
         title="Preço Médio"
         value={formatCurrency(stats.precoMedio)}
         icon={DollarSign}
+        color="green"
       />
 
       <StatCard
         title="Disponíveis"
         value={String(stats.disponiveis)}
         icon={CheckCircle2}
+        color="blue"
       />
 
       <StatCard
         title="Indisponíveis"
         value={String(stats.indisponiveis)}
         icon={XCircle}
+        color="red"
       />
     </section>
   );

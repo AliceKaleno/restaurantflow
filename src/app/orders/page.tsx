@@ -1,17 +1,10 @@
 import Layout from "@/components/layout/Layout";
+import OrdersPage from "@/features/orders/pages/OrdersPage";
 
-export default function OrdersPage() {
+export default function Orders() {
   return (
     <Layout>
-      <div className="space-y-3">
-        <h1 className="text-3xl font-bold">
-          Pedidos
-        </h1>
-
-        <p className="text-slate-500">
-          Gerencie todos os pedidos do restaurante.
-        </p>
-      </div>
+      <OrdersPage />
     </Layout>
   );
 }
