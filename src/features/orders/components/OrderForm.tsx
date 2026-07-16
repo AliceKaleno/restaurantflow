@@ -5,7 +5,7 @@ import { useState } from "react";
 import OrderItems from "./OrderItems";
 import OrderSummary from "./OrderSummary";
 
-import { OrderItem } from "../types/order";
+import { OrderItem } from "@/types/order";
 
 export default function OrderForm() {
   const [items, setItems] = useState<OrderItem[]>([]);

@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 import { useMenuStore } from "@/store/menuStore";
-import { OrderItem } from "../types/order";
+import { OrderItem } from "@/types/order";
 
 interface OrderItemsProps {
   items: OrderItem[];

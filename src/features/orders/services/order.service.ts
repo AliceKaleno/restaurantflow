@@ -1,4 +1,4 @@
-import { OrderItem } from "../types/order";
+import { OrderItem } from "@/types/order";
 
 export function getOrderSubtotal(
   items: OrderItem[]

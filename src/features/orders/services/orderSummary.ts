@@ -1,4 +1,4 @@
-import { Order } from "../types/order";
+import { Order } from "@/types/order";
 
 export function getOrderTotal(order: Order) {
   return order.items.reduce(

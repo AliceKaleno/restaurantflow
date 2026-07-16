@@ -1,37 +1,32 @@
-import { MenuItem } from "@/types/menu";
+import { MenuItem } from "./menu";
 
 export type OrderStatus =
   | "Pendente"
-  | "Em preparo"
+  | "Preparando"
   | "Pronto"
   | "Entregue"
   | "Cancelado";
 
-export type PaymentMethod =
-  | "Dinheiro"
-  | "Cartão"
-  | "PIX";
+export type PaymentMethod = "PIX" | "Cartão" | "Dinheiro";
 
 export interface OrderItem {
   id: string;
-
   menuItem: MenuItem;
-
   quantity: number;
 }
 
 export interface Order {
   id: string;
-
   customerName: string;
+  table?: string;
 
-  table: string;
+  items: OrderItem[];
+
+  total: number;
 
   paymentMethod: PaymentMethod;
 
   status: OrderStatus;
-
-  items: OrderItem[];
 
   createdAt: string;
 }

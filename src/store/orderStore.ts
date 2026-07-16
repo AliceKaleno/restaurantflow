@@ -1,7 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
-import { Order } from "@/features/orders/types/order";
+import { Order } from "@/types/order";
 
 interface OrderStore {
   orders: Order[];
@@ -10,43 +9,26 @@ interface OrderStore {
 
   removeOrder: (id: string) => void;
 
-  updateOrder: (
-    id: string,
-    data: Partial<Order>
-  ) => void;
+  clearOrders: () => void;
 }
 
-export const useOrderStore = create<OrderStore>()(
-  persist(
-    (set) => ({
+export const useOrderStore = create<OrderStore>((set) => ({
+  orders: [],
+
+  addOrder: (order) =>
+    set((state) => ({
+      orders: [order, ...state.orders],
+    })),
+
+  removeOrder: (id) =>
+    set((state) => ({
+      orders: state.orders.filter(
+        (order) => order.id !== id
+      ),
+    })),
+
+  clearOrders: () =>
+    set({
       orders: [],
-
-      addOrder: (order) =>
-        set((state) => ({
-          orders: [order, ...state.orders],
-        })),
-
-      removeOrder: (id) =>
-        set((state) => ({
-          orders: state.orders.filter(
-            (order) => order.id !== id
-          ),
-        })),
-
-      updateOrder: (id, data) =>
-        set((state) => ({
-          orders: state.orders.map((order) =>
-            order.id === id
-              ? {
-                  ...order,
-                  ...data,
-                }
-              : order
-          ),
-        })),
     }),
-    {
-      name: "restaurantflow-orders",
-    }
-  )
-);
+}));

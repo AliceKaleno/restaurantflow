@@ -1,7 +1,7 @@
 "use client";
 
 import AppCard from "@/components/shared/AppCard";
-import { OrderItem } from "../types/order";
+import { OrderItem } from "@/types/order";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 interface OrderSummaryProps {

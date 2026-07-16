@@ -2,7 +2,7 @@
 
 import AppCard from "@/components/shared/AppCard";
 
-import { Order } from "@/features/orders/types/order";
+import { Order } from "@/types/order";
 
 import {
   getOrderItemsDescription,
