@@ -11,17 +11,22 @@ export type PaymentMethod = "PIX" | "Cartão" | "Dinheiro";
 
 export interface OrderItem {
   id: string;
-  menuItem: MenuItem;
+
+  menuItemId: string;
+
+  name: string;
+
+  price: number;
+
   quantity: number;
 }
 
 export interface Order {
-
   id: string;
 
   customerName: string;
 
-  table: string;
+  table: string | null;
 
   paymentMethod: PaymentMethod;
 
@@ -29,7 +34,13 @@ export interface Order {
 
   items: OrderItem[];
 
+  total: number;
+
   createdAt: string;
+
+  preparingAt?: string;
+
+  readyAt?: string;
 
   completedAt?: string;
 }

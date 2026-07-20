@@ -6,11 +6,13 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-  SheetFooter,
 } from "@/components/ui/sheet";
+
+import { ClipboardList } from "lucide-react";
 
 import CustomerSection from "./form/CustomerSection";
 import TableSection from "./form/TableSection";
@@ -18,33 +20,39 @@ import MenuItemsSection from "./form/MenuItemsSection";
 import SummarySection from "./form/SummarySection";
 
 import { useMenuStore } from "@/store/menuStore";
+import { useOrderStore } from "@/store/orderStore";
 
-import { OrderItem } from "@/types/order";
 import { MenuItem } from "@/types/menu";
-
-import { ClipboardList } from "lucide-react";
+import { OrderItem } from "@/types/order";
 
 import { createOrder } from "@/services/orders/createOrder";
-import { useOrderStore } from "@/store/orderStore";
+
+import { PaymentMethod } from "@/types/order";
+
+import PaymentSection from "./form/PaymentSection";
 
 export default function NewOrderSheet() {
   const [customer, setCustomer] = useState("");
 
   const [table, setTable] = useState("");
 
+  const [items, setItems] = useState<OrderItem[]>([]);
+
   const menu = useMenuStore((state) => state.items);
 
   const addOrder = useOrderStore((state) => state.addOrder);
 
-  const [items, setItems] = useState<OrderItem[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("PIX");
 
   function handleAddItem(menuItem: MenuItem) {
     setItems((current) => {
-      const existing = current.find((item) => item.menuItem.id === menuItem.id);
+      const existing = current.find(
+        (item) => item.menuItemId === String(menuItem.id),
+      );
 
       if (existing) {
         return current.map((item) =>
-          item.menuItem.id === menuItem.id
+          item.menuItemId === String(menuItem.id)
             ? {
                 ...item,
                 quantity: item.quantity + 1,
@@ -57,25 +65,40 @@ export default function NewOrderSheet() {
         ...current,
         {
           id: crypto.randomUUID(),
-          menuItem,
+          menuItemId: String(menuItem.id),
+          name: menuItem.name,
+          price: menuItem.price,
           quantity: 1,
         },
       ];
     });
   }
 
+  function handleIncreaseItem(menuItemId: string) {
+    setItems((current) =>
+      current.map((item) =>
+        item.menuItemId === menuItemId
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+          : item,
+      ),
+    );
+  }
+
   function handleRemoveItem(menuItemId: string | number) {
     setItems((current) => {
-      const existing = current.find((item) => item.menuItem.id === menuItemId);
+      const existing = current.find((item) => item.menuItemId === menuItemId);
 
       if (!existing) return current;
 
       if (existing.quantity === 1) {
-        return current.filter((item) => item.menuItem.id !== menuItemId);
+        return current.filter((item) => item.menuItemId !== menuItemId);
       }
 
       return current.map((item) =>
-        item.menuItem.id === menuItemId
+        item.menuItemId === menuItemId
           ? {
               ...item,
               quantity: item.quantity - 1,
@@ -105,6 +128,7 @@ export default function NewOrderSheet() {
     const order = createOrder({
       customerName: customer,
       table,
+      paymentMethod,
       items,
     });
 
@@ -143,8 +167,19 @@ export default function NewOrderSheet() {
         "
       >
         <SheetHeader className="items-center text-center">
-          <div className="mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-orange-100">
-            <ClipboardList className="text-orange-500" size={26} />
+          <div
+            className="
+              mb-2
+              flex
+              h-14
+              w-14
+              items-center
+              justify-center
+              rounded-full
+              bg-orange-100
+            "
+          >
+            <ClipboardList size={26} className="text-orange-500" />
           </div>
 
           <SheetTitle>Novo Pedido</SheetTitle>
@@ -166,6 +201,8 @@ export default function NewOrderSheet() {
 
           <TableSection value={table} onChange={setTable} />
 
+          <PaymentSection value={paymentMethod} onChange={setPaymentMethod} />
+
           <MenuItemsSection
             menu={menu}
             items={items}
@@ -175,7 +212,7 @@ export default function NewOrderSheet() {
 
           <SummarySection
             items={items}
-            onAdd={handleAddItem}
+            onAdd={handleIncreaseItem}
             onRemove={handleRemoveItem}
           />
         </div>

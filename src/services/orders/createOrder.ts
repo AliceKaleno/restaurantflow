@@ -1,37 +1,48 @@
-import { Order, OrderItem } from "@/types/order";
+import { Order, OrderItem, PaymentMethod } from "@/types/order";
 
 interface CreateOrderData {
   customerName: string;
-  table?: string;
+  table: string;
+  paymentMethod: PaymentMethod;
   items: OrderItem[];
 }
 
 export function createOrder({
   customerName,
   table,
+  paymentMethod,
   items,
 }: CreateOrderData): Order {
+  const now = new Date().toISOString();
+
   const total = items.reduce(
-    (sum, item) =>
-      sum + item.menuItem.price * item.quantity,
-    0
+    (sum, item) => sum + item.price * item.quantity,
+    0,
   );
 
-  return {
+  const order: Order = {
     id: crypto.randomUUID(),
 
     customerName,
 
-    table,
+    table: table.trim() || null,
 
     items,
 
     total,
 
-    paymentMethod: "PIX",
+    paymentMethod,
 
     status: "Pendente",
 
-    createdAt: new Date().toISOString(),
+    createdAt: now,
+
+    preparingAt: undefined,
+
+    readyAt: undefined,
+
+    completedAt: undefined,
   };
+
+  return order;
 }

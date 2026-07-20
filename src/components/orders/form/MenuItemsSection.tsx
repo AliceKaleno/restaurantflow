@@ -20,7 +20,7 @@ export default function MenuItemsSection({ menu, items, onAdd }: Props) {
   const availableItems = useMemo(() => {
     return menu
       .filter(
-        (item) => !items.some((orderItem) => orderItem.menuItem.id === item.id),
+        (item) => !items.some((orderItem) => orderItem.menuItemId === item.id),
       )
       .filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
   }, [menu, items, search]);

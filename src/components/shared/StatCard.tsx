@@ -6,25 +6,33 @@ interface StatCardProps {
   title: string;
   value: string;
   icon: LucideIcon;
-  color?: "orange" | "green" | "blue" | "red";
+  color?:  "blue" | "green" | "orange" | "red" | "purple";
 }
 
 const colors = {
-  orange: {
-    bg: "bg-orange-100",
-    text: "text-orange-500",
-  },
-  green: {
-    bg: "bg-green-100",
-    text: "text-green-500",
-  },
   blue: {
     bg: "bg-blue-100",
-    text: "text-blue-500",
+    text: "text-blue-600",
   },
+
+  green: {
+    bg: "bg-green-100",
+    text: "text-green-600",
+  },
+
+  orange: {
+    bg: "bg-orange-100",
+    text: "text-orange-600",
+  },
+
   red: {
     bg: "bg-red-100",
-    text: "text-red-500",
+    text: "text-red-600",
+  },
+
+  purple: {
+    bg: "bg-purple-100",
+    text: "text-purple-600",
   },
 };
 

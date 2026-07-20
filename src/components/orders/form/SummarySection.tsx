@@ -5,14 +5,13 @@ import { ClipboardList } from "lucide-react";
 import AppCard from "@/components/shared/AppCard";
 
 import { OrderItem } from "@/types/order";
-import { MenuItem } from "@/types/menu";
 
 import { formatCurrency } from "@/utils/formatCurrency";
 
 interface Props {
   items: OrderItem[];
 
-  onAdd: (menuItem: MenuItem) => void;
+  onAdd: (id: string) => void;
 
   onRemove: (id: string | number) => void;
 }
@@ -23,7 +22,7 @@ export default function SummarySection({
   onRemove,
 }: Props) {
   const subtotal = items.reduce(
-    (acc, item) => acc + item.menuItem.price * item.quantity,
+    (acc, item) => acc + item.price * item.quantity,
     0,
   );
 
@@ -46,11 +45,11 @@ export default function SummarySection({
           {items.map((item) => (
             <div key={item.id} className="flex justify-between">
               <div>
-                <p className="font-medium">{item.menuItem.name}</p>
+                <p className="font-medium">{item.name}</p>
 
                 <div className="mt-2 flex items-center gap-3">
                   <button
-                    onClick={() => onRemove(item.menuItem.id)}
+                    onClick={() => onRemove(item.menuItemId)}
                     className="
                       flex
                       h-8
@@ -69,12 +68,12 @@ export default function SummarySection({
                   <span className="font-semibold">{item.quantity}</span>
 
                   <button
-                    onClick={() => onAdd(item.menuItem)}
+                    onClick={() => onAdd(item.menuItemId)}
                     className="
                       flex
                       h-8
                       w-8
-                      items-center
+                      items-centera
                       justify-center
                       rounded-full
                       bg-orange-500
@@ -89,7 +88,7 @@ export default function SummarySection({
               </div>
 
               <strong>
-                {formatCurrency(item.menuItem.price * item.quantity)}
+                {formatCurrency(item.price * item.quantity)}
               </strong>
             </div>
           ))}

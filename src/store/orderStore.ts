@@ -26,7 +26,7 @@ export const useOrderStore = create<OrderStore>()(
 
       addOrder: (order) =>
         set((state) => ({
-          orders: [order, ...state.orders],
+          orders: [order, ...state.orders].slice(0, 50),
         })),
 
       removeOrder: (id) =>
@@ -40,21 +40,27 @@ export const useOrderStore = create<OrderStore>()(
 
           if (!order) return state;
 
+          const now = new Date().toISOString();
+
           const updatedOrder = {
             ...order,
             status,
 
+            preparingAt: status === "Preparando" ? now : order.preparingAt,
+
+            readyAt: status === "Pronto" ? now : order.readyAt,
+
             completedAt:
               status === "Entregue" || status === "Cancelado"
-                ? new Date().toISOString()
-                : undefined,
+                ? now
+                : order.completedAt,
           };
 
           if (status === "Entregue" || status === "Cancelado") {
             return {
               orders: state.orders.filter((o) => o.id !== id),
 
-              history: [updatedOrder, ...state.history],
+              history: [updatedOrder, ...state.history].slice(0, 100),
             };
           }
 
@@ -69,8 +75,14 @@ export const useOrderStore = create<OrderStore>()(
           history: [],
         }),
     }),
+
     {
       name: "restaurantflow-orders",
+
+      partialize: (state) => ({
+        orders: state.orders.slice(0, 50),
+        history: state.history.slice(0, 100),
+      }),
     },
   ),
 );

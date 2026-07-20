@@ -1,17 +1,11 @@
 import Layout from "@/components/layout/Layout";
 
-export default function OrdersPage() {
+import ReservationsPage from "@/features/reservations/pages/ReservationsPage";
+
+export default function Reservations() {
   return (
     <Layout>
-      <div className="space-y-3">
-        <h1 className="text-3xl font-bold">
-          Reservas
-        </h1>
-
-        <p className="text-slate-500">
-          Gerencie todos as reservas do restaurante.
-        </p>
-      </div>
+      <ReservationsPage />
     </Layout>
   );
 }

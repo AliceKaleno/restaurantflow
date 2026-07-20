@@ -4,9 +4,10 @@ export type TableStatus =
   | "Reservada";
 
 export interface RestaurantTable {
-  id: number;
+  id: string;
   number: number;
+  seats: number;
   status: TableStatus;
-  people: number;
-  total: number;
+  orderId?: string;
+  reservationTime?: string;
 }

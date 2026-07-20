@@ -6,10 +6,14 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 
 import DashboardInsights from "@/components/dashboard/DashboardInsights";
 
+import DashboardOperationalCards from "@/components/operational/DashboardOperationalCards";
+
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <DashboardHeader />
+
+      <DashboardOperationalCards />
 
       <DashboardCards />
 
@@ -19,7 +23,6 @@ export default function DashboardPage() {
         <div className="lg:col-span-2">
           <DashboardChart />
         </div>
-
         <LatestMenuItems />
       </div>
     </div>
