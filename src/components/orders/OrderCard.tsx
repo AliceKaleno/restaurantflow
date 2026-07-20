@@ -4,23 +4,24 @@ import AppCard from "@/components/shared/AppCard";
 
 import { Order } from "@/types/order";
 
-import {
-  getOrderItemsDescription,
-  getOrderTotal,
-} from "@/features/orders/services/orderSummary";
+import { getOrderItemsDescription } from "@/features/orders/services/orderSummary";
 
 import { getOrderStatusStyle } from "@/utils/orderStatus";
 import { formatCurrency } from "@/utils/formatCurrency";
+
+import { useOrderStore } from "@/store/orderStore";
+
+import OrderStatusAction from "./OrderStatusAction";
 
 interface Props {
   order: Order;
 }
 
-export default function OrderCard({
-  order,
-}: Props) {
+export default function OrderCard({ order }: Props) {
   const style = getOrderStatusStyle(order.status);
   const Icon = style.icon;
+
+  const updateStatus = useOrderStore((state) => state.updateStatus);
 
   return (
     <AppCard
@@ -44,30 +45,21 @@ export default function OrderCard({
               ${style.bg}
             `}
           >
-            <Icon
-              size={24}
-              className={style.text}
-            />
+            <Icon size={24} className={style.text} />
           </div>
 
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="font-bold">
-                #{order.id.slice(0, 5)}
-              </h2>
+              <h2 className="font-bold">#{order.id.slice(0, 5)}</h2>
 
-              <span className="text-slate-400">
-                •
-              </span>
+              <span className="text-slate-400">•</span>
 
               <span className="text-slate-500">
                 {order.table || "Delivery"}
               </span>
             </div>
 
-            <h3 className="mt-1 text-xl font-semibold">
-              {order.customerName}
-            </h3>
+            <h3 className="mt-1 text-xl font-semibold">{order.customerName}</h3>
 
             <p className="mt-2 text-sm text-slate-500">
               {getOrderItemsDescription(order)}
@@ -77,7 +69,7 @@ export default function OrderCard({
 
         <div className="text-right">
           <h2 className="text-2xl font-bold text-slate-900">
-            {formatCurrency(getOrderTotal(order))}
+            {formatCurrency(order.total)}
           </h2>
 
           <span
@@ -97,6 +89,11 @@ export default function OrderCard({
           </span>
         </div>
       </div>
+
+      <OrderStatusAction
+        status={order.status}
+        onChange={(status) => updateStatus(order.id, status)}
+      />
     </AppCard>
   );
 }

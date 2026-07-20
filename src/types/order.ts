@@ -16,17 +16,20 @@ export interface OrderItem {
 }
 
 export interface Order {
+
   id: string;
+
   customerName: string;
-  table?: string;
 
-  items: OrderItem[];
-
-  total: number;
+  table: string;
 
   paymentMethod: PaymentMethod;
 
   status: OrderStatus;
 
+  items: OrderItem[];
+
   createdAt: string;
+
+  completedAt?: string;
 }
