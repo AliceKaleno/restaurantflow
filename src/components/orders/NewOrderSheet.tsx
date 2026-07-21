@@ -31,6 +31,8 @@ import { PaymentMethod } from "@/types/order";
 
 import PaymentSection from "./form/PaymentSection";
 
+import { useTableStore } from "@/store/tableStore";
+
 export default function NewOrderSheet() {
   const [customer, setCustomer] = useState("");
 
@@ -43,6 +45,12 @@ export default function NewOrderSheet() {
   const addOrder = useOrderStore((state) => state.addOrder);
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("PIX");
+
+  const tables = useTableStore((state) => state.tables);
+
+  const updateTable = useTableStore((state) => state.updateTable);
+
+  const selectedTable = tables.find((t) => t.id === table);
 
   function handleAddItem(menuItem: MenuItem) {
     setItems((current) => {
@@ -125,14 +133,30 @@ export default function NewOrderSheet() {
       return;
     }
 
+    if (!table || !selectedTable) {
+      alert("Selecione uma mesa.");
+      return;
+    }
+
     const order = createOrder({
+      customerId: crypto.randomUUID(),
+
       customerName: customer,
-      table,
+
+      tableId: selectedTable.id,
+
+      tableNumber: selectedTable.number,
+
       paymentMethod,
+
       items,
     });
 
     addOrder(order);
+
+    updateTable(selectedTable.id, {
+      status: "Ocupada",
+    });
 
     handleCancel();
   }

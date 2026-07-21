@@ -13,6 +13,7 @@ import { useOrderStore } from "@/store/orderStore";
 
 import OrderStatusAction from "./OrderStatusAction";
 
+import { useTableStore } from "@/store/tableStore";
 interface Props {
   order: Order;
 }
@@ -22,6 +23,8 @@ export default function OrderCard({ order }: Props) {
   const Icon = style.icon;
 
   const updateStatus = useOrderStore((state) => state.updateStatus);
+
+  const updateTable = useTableStore((state) => state.updateTable);
 
   return (
     <AppCard
@@ -55,7 +58,7 @@ export default function OrderCard({ order }: Props) {
               <span className="text-slate-400">•</span>
 
               <span className="text-slate-500">
-                {order.table || "Delivery"}
+                {order.tableNumber ? `Mesa ${order.tableNumber}` : "Delivery"}
               </span>
             </div>
 
@@ -92,7 +95,16 @@ export default function OrderCard({ order }: Props) {
 
       <OrderStatusAction
         status={order.status}
-        onChange={(status) => updateStatus(order.id, status)}
+        onChange={(status) => {
+          updateStatus(order.id, status);
+
+          if (status === "Entregue" || status === "Cancelado") {
+            updateTable(order.tableId!,{
+              status: "Livre",
+              reservationTime: undefined,
+            });
+          }
+        }}
       />
     </AppCard>
   );

@@ -24,9 +24,13 @@ export interface OrderItem {
 export interface Order {
   id: string;
 
+  customerId: string;
+
   customerName: string;
 
-  table: string | null;
+  tableId: string | null;
+
+  tableNumber: number | null;
 
   paymentMethod: PaymentMethod;
 

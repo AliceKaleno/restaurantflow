@@ -7,29 +7,20 @@ import { useOrderStore } from "@/store/orderStore";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function RecentOrdersTable() {
-  const history = useOrderStore(
-    (state) => state.history
-  );
+  const history = useOrderStore((state) => state.history);
 
   const recentOrders = history.slice(0, 8);
 
   return (
     <AppCard>
-
       <div className="mb-6 flex items-center justify-between">
-
         <div>
-
-          <h2 className="text-xl font-bold">
-            Últimos pedidos
-          </h2>
+          <h2 className="text-xl font-bold">Últimos pedidos</h2>
 
           <p className="text-sm text-slate-500">
             Pedidos concluídos recentemente
           </p>
-
         </div>
-
       </div>
 
       {recentOrders.length === 0 ? (
@@ -38,67 +29,40 @@ export default function RecentOrdersTable() {
         </div>
       ) : (
         <div className="overflow-x-auto">
-
           <table className="w-full">
-
             <thead>
-
               <tr className="border-b border-slate-200 text-left">
+                <th className="pb-3 font-semibold">Cliente</th>
 
-                <th className="pb-3 font-semibold">
-                  Cliente
-                </th>
+                <th className="pb-3 font-semibold">Mesa</th>
 
-                <th className="pb-3 font-semibold">
-                  Mesa
-                </th>
+                <th className="pb-3 font-semibold">Total</th>
 
-                <th className="pb-3 font-semibold">
-                  Total
-                </th>
+                <th className="pb-3 font-semibold">Data</th>
 
-                <th className="pb-3 font-semibold">
-                  Data
-                </th>
-
-                <th className="pb-3 font-semibold">
-                  Status
-                </th>
-
+                <th className="pb-3 font-semibold">Status</th>
               </tr>
-
             </thead>
 
             <tbody>
-
               {recentOrders.map((order) => (
-
-                <tr
-                  key={order.id}
-                  className="border-b border-slate-100"
-                >
-
-                  <td className="py-4 font-medium">
-                    {order.customerName}
-                  </td>
+                <tr key={order.id} className="border-b border-slate-100">
+                  <td className="py-4 font-medium">{order.customerName}</td>
 
                   <td className="py-4">
-                    {order.table || "-"}
+                    {order.tableNumber
+                      ? `Mesa ${order.tableNumber}`
+                      : "Delivery"}
                   </td>
-
-                  <td className="py-4">
-                    {formatCurrency(order.total)}
-                  </td>
+                  <td className="py-4">{formatCurrency(order.total)}</td>
 
                   <td className="py-4">
                     {new Date(
-                      order.completedAt ??
-                        order.createdAt
+                      order.completedAt ?? order.createdAt,
                     ).toLocaleDateString("pt-BR")}
                   </td>
 
                   <td className="py-4">
-
                     <span
                       className={`
                         rounded-full
@@ -115,20 +79,13 @@ export default function RecentOrdersTable() {
                     >
                       {order.status}
                     </span>
-
                   </td>
-
                 </tr>
-
               ))}
-
             </tbody>
-
           </table>
-
         </div>
       )}
-
     </AppCard>
   );
 }
