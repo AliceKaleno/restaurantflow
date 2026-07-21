@@ -1,13 +1,12 @@
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Layout from "@/components/layout/Layout";
+import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
-import TablesPage from "@/features/tables/pages/TablePage";
-
-export default function Tables() {
+export default function Dashboard() {
   return (
     <ProtectedRoute>
     <Layout>
-      <TablesPage />
+      <DashboardPage />
     </Layout>
     </ProtectedRoute>
   );

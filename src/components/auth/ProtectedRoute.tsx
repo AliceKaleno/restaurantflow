@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactNode } from "react";
-import { redirect } from "next/navigation";
+import { ReactNode, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { useAuthStore } from "@/store/authStore";
 
@@ -12,12 +12,20 @@ interface Props {
 export default function ProtectedRoute({
   children,
 }: Props) {
+  const router = useRouter();
+
   const isAuthenticated = useAuthStore(
     (state) => state.isAuthenticated
   );
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
+
   if (!isAuthenticated) {
-    redirect("/login");
+    return null;
   }
 
   return <>{children}</>;

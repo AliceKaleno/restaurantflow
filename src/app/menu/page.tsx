@@ -6,6 +6,7 @@ import MenuHeader from "@/features/menu/components/MenuHeader";
 import MenuGrid from "@/features/menu/components/MenuGrid";
 
 import { useMenuFilter } from "@/features/menu/hooks/useMenuFilter";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 export default function MenuPage() {
   const {
@@ -18,6 +19,7 @@ export default function MenuPage() {
 
   return (
     <Layout>
+      <ProtectedRoute>
       <div className="space-y-8">
         <MenuHeader
           search={search}
@@ -32,6 +34,7 @@ export default function MenuPage() {
 
         <MenuGrid items={filteredItems} />
       </div>
+      </ProtectedRoute>
     </Layout>
   );
 }

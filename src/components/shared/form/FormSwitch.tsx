@@ -7,18 +7,18 @@ import {
 } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import Switch from "@/components/ui/switch";
 
-interface FormSwitchProps<
-  TFieldValues extends FieldValues = FieldValues,
+interface FormSwitchProps
+  <TFieldValues extends FieldValues = FieldValues,
   TName extends Path<TFieldValues> = Path<TFieldValues>
 > {
   label: string;
   field: ControllerRenderProps<TFieldValues, TName>;
 }
 
-export default function FormSwitch<
-  TFieldValues extends FieldValues,
+export default function FormSwitch
+  <TFieldValues extends FieldValues,
   TName extends Path<TFieldValues>
 >({
   label,
@@ -31,7 +31,7 @@ export default function FormSwitch<
 
       <Switch
         checked={field.value}
-        onCheckedChange={field.onChange}
+        onChange={field.onChange}
       />
 
     </div>

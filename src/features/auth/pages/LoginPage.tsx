@@ -46,17 +46,6 @@ export default function LoginPage() {
             >
               Criar conta
             </Link>
-
-            <button
-              className="
-                ml-2
-                font-semibold
-                text-orange-500
-                hover:underline
-              "
-            >
-              Criar conta
-            </button>
           </div>
         </div>
       </section>
